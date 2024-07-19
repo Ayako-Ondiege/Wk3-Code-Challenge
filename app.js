@@ -31,5 +31,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
   
+    function displayFilmDetails(film) {
+      poster.src = film.poster;             
+      title.textContent = film.title;
+      runtime.textContent = film.runtime;
+      showtime.textContent = film.showtime;
+      description.textContent = film.description;
+      updateAvailableTickets(film);
+  
+      // Reset button text and class
+      buyTicketBtn.textContent = 'Buy Ticket';
+      buyTicketBtn.classList.remove('sold-out');
+  
+      buyTicketBtn.onclick = () => {
+        if (film.capacity - film.tickets_sold > 0) {
+          film.tickets_sold += 1;
+          updateAvailableTickets(film);
+        } else {
+          buyTicketBtn.textContent = 'Sold Out';
+          buyTicketBtn.classList.add('sold-out');
+        }
+      };
+    }
+  
+    function updateAvailableTickets(film) {
+      availableTickets.textContent = film.capacity - film.tickets_sold;
+    }
   });
   
